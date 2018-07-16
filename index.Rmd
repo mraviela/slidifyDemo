@@ -1,0 +1,125 @@
+---
+title       : OnLine Life Insurance quotes
+subtitle    : Final project for course Developing Data Products
+author      : Miguel Raviela
+job         : Data Scientist in training
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+github:
+  user: mraviela
+  repo: slidifyDemo
+---
+
+
+## The case
+
+Some years ago I was working for an insurance company, creating new web systems to offer our
+clients the option to obtain quotations over internet, the company as many others did have several
+backend systems for the different kind of insurance products as automoviles, house and life.  
+
+Some of those where well documented and created in modern languajes as java, with source code available
+to review and create the needed integrations, but the system for life policies was and old COBOL development
+very hard to integrate and to make it really worst case scenario, without documentation and source code,
+at that time was impossible to create an interactive web application for this kind of insurance policies.
+
+Now I challenge my self to create the solution for it, using Data Science tools.
+
+--- .class #id 
+
+## The data
+
+Now a days I no longer work this company, so I find some turn arouds in order to recreate the case.
+
+ 1. I recreate the data set, by extracting manually quotations online.  
+ 2. For the original case the approach is to extract it from database.  
+ 3. The recreated data set is 52 observations with 3 variables, enought to recreate the case.  
+
+
+## The model
+
+With the dataset recreated, I tranined a model, the best option was GML, family GAMMA with log link. The feature creation was the real challenge.
+
+```
+model <- glm(premium ~ age + coverage + I(age * log(coverage)) + I(age^2 * coverage), 
+data=insurance.data, family = Gamma(link="log"))
+
+```  
+
+---
+
+## The app
+
+The app creation was really simple using Shiny package, from those old days I recovered some part of the business rules
+insurance products creators use.
+
+ 1. The base for life insurance is Age.
+ 2. Calculation age is obtained by penalizing if the client is a smoker and male.
+ 3. Coverage known as insurance amount is also in the formula to get the final calculation. 
+
+The app is available at https://mraviela.shinyapps.io/life_insurance/
+
+---
+## Motion Chart
+
+AS required next is an interactive graphic to play with the dataset recreated.
+
+```{r  echo=F, results='asis', message=F}
+suppressPackageStartupMessages(library(googleVis))
+
+age <- c(18,18,18,18,
+         20,20,20,20,
+         25,25,25,25,
+         30,30,30,30,
+         35,35,35,35,
+         40,40,40,40,
+         45,45,45,45,
+         50,50,50,50,
+         55,55,55,55,
+         60,60,60,60,
+         65,65,65,65,
+         70,70,70,70,
+         75,75,75,75)
+
+coverage <- c(50000,250000,500000,1000000,
+              100000,250000,500000,1000000,
+              100000,250000,500000,1000000,
+              100000,250000,500000,1000000,
+              100000,250000,500000,1000000,
+              100000,250000,750000,1000000,
+              100000,250000,750000,1000000,
+              100000,250000,750000,1000000,
+              100000,250000,750000,1000000,
+              100000,250000,750000,1000000,
+              100000,250000,750000,1000000,
+              100000,250000,750000,1000000,
+              100000,250000,750000,1000000)
+
+premium <- c(128,227,437,480,
+             184,254,444,490,
+             188,256,450,510,
+             196,266,474,540,
+             210,291,499,630,
+             237,380,687,890,
+             303,596,1025,1340,
+             427,891,1782,2350,
+             659,1459,3185,4220,
+             1088,2361,5892,7830,
+             1958,4496,13146,16634,
+             3660,7656,22505,29943,
+             4974,12238,29712,38673)
+
+
+insurance.data <- data.frame(age,coverage,premium)
+M <- gvisMotionChart(insurance.data,"age","premium", options = list(width=600, height=400))
+print(M, tag = 'chart')
+```
+
+
+
+
+
+
+

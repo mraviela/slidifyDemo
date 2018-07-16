@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OnLine Life Insurance quotes</title>
+  <meta charset="utf-8">
+  <meta name="description" content="OnLine Life Insurance quotes">
+  <meta name="author" content="Miguel Raviela">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>OnLine Life Insurance quotes</h1>
+    <h2>Final project for course Developing Data Products</h2>
+    <p>Miguel Raviela<br/>Data Scientist in training</p>
+  </hgroup>
+    <a href="https://github.com/mraviela/slidifyDemo/zipball/gh-pages" class="example">
+     Download
+    </a>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>The case</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Some years ago I was working for an insurance company, creating new web systems to offer our
+clients the option to obtain quotations over internet, the company as many others did have several
+backend systems for the different kind of insurance products as automoviles, house and life.  </p>
+
+<p>Some of those where well documented and created in modern languajes as java, with source code available
+to review and create the needed integrations, but the system for life policies was and old COBOL development
+very hard to integrate and to make it really worst case scenario, without documentation and source code,
+at that time was impossible to create an interactive web application for this kind of insurance policies.</p>
+
+<p>Now I challenge my self to create the solution for it, using Data Science tools.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The data</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Now a days I no longer work this company, so I find some turn arouds in order to recreate the case.</p>
+
+<ol>
+<li>I recreate the data set, by extracting manually quotations online.<br></li>
+<li>For the original case the approach is to extract it from database.<br></li>
+<li>The recreated data set is 52 observations with 3 variables, enought to recreate the case.<br></li>
+</ol>
+
+<h2>The model</h2>
+
+<p>With the dataset recreated, I tranined a model, the best option was GML, family GAMMA with log link. The feature creation was the real challenge.</p>
+
+<pre><code>model &lt;- glm(premium ~ age + coverage + I(age * log(coverage)) + I(age^2 * coverage), 
+data=insurance.data, family = Gamma(link=&quot;log&quot;))
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>The app</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The app creation was really simple using Shiny package, from those old days I recovered some part of the business rules
+insurance products creators use.</p>
+
+<ol>
+<li>The base for life insurance is Age.</li>
+<li>Calculation age is obtained by penalizing if the client is a smoker and male.</li>
+<li>Coverage known as insurance amount is also in the formula to get the final calculation. </li>
+</ol>
+
+<p>The app is available at <a href="https://mraviela.shinyapps.io/life_insurance/">https://mraviela.shinyapps.io/life_insurance/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Motion Chart</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>AS required next is an interactive graphic to play with the dataset recreated.</p>
+
+<!-- MotionChart generated in R 3.5.0 by googleVis 0.6.2 package -->
+
+<!-- Sun Jul 15 20:35:50 2018 -->
+
+<!-- jsHeader -->
+
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataMotionChartID177c5272f55fa () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"18",
+128,
+50000
+],
+[
+"18",
+227,
+250000
+],
+[
+"18",
+437,
+5e+05
+],
+[
+"18",
+480,
+1e+06
+],
+[
+"20",
+184,
+1e+05
+],
+[
+"20",
+254,
+250000
+],
+[
+"20",
+444,
+5e+05
+],
+[
+"20",
+490,
+1e+06
+],
+[
+"25",
+188,
+1e+05
+],
+[
+"25",
+256,
+250000
+],
+[
+"25",
+450,
+5e+05
+],
+[
+"25",
+510,
+1e+06
+],
+[
+"30",
+196,
+1e+05
+],
+[
+"30",
+266,
+250000
+],
+[
+"30",
+474,
+5e+05
+],
+[
+"30",
+540,
+1e+06
+],
+[
+"35",
+210,
+1e+05
+],
+[
+"35",
+291,
+250000
+],
+[
+"35",
+499,
+5e+05
+],
+[
+"35",
+630,
+1e+06
+],
+[
+"40",
+237,
+1e+05
+],
+[
+"40",
+380,
+250000
+],
+[
+"40",
+687,
+750000
+],
+[
+"40",
+890,
+1e+06
+],
+[
+"45",
+303,
+1e+05
+],
+[
+"45",
+596,
+250000
+],
+[
+"45",
+1025,
+750000
+],
+[
+"45",
+1340,
+1e+06
+],
+[
+"50",
+427,
+1e+05
+],
+[
+"50",
+891,
+250000
+],
+[
+"50",
+1782,
+750000
+],
+[
+"50",
+2350,
+1e+06
+],
+[
+"55",
+659,
+1e+05
+],
+[
+"55",
+1459,
+250000
+],
+[
+"55",
+3185,
+750000
+],
+[
+"55",
+4220,
+1e+06
+],
+[
+"60",
+1088,
+1e+05
+],
+[
+"60",
+2361,
+250000
+],
+[
+"60",
+5892,
+750000
+],
+[
+"60",
+7830,
+1e+06
+],
+[
+"65",
+1958,
+1e+05
+],
+[
+"65",
+4496,
+250000
+],
+[
+"65",
+13146,
+750000
+],
+[
+"65",
+16634,
+1e+06
+],
+[
+"70",
+3660,
+1e+05
+],
+[
+"70",
+7656,
+250000
+],
+[
+"70",
+22505,
+750000
+],
+[
+"70",
+29943,
+1e+06
+],
+[
+"75",
+4974,
+1e+05
+],
+[
+"75",
+12238,
+250000
+],
+[
+"75",
+29712,
+750000
+],
+[
+"75",
+38673,
+1e+06
+] 
+];
+data.addColumn('string','age');
+data.addColumn('number','premium');
+data.addColumn('number','coverage');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartMotionChartID177c5272f55fa() {
+var data = gvisDataMotionChartID177c5272f55fa();
+var options = {};
+options["width"] = 600;
+options["height"] = 400;
+options["state"] = "";
+
+    var chart = new google.visualization.MotionChart(
+    document.getElementById('MotionChartID177c5272f55fa')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "motionchart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartMotionChartID177c5272f55fa);
+})();
+function displayChartMotionChartID177c5272f55fa() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+
+<!-- jsChart -->  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID177c5272f55fa"></script>
+ 
+
+<!-- divChart -->
+
+<div id="MotionChartID177c5272f55fa" 
+  style="width: 600; height: 400;">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='The case'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='The data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='The app'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Motion Chart'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
